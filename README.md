@@ -1,19 +1,70 @@
-# Создали itogi_attestacii
+1)Задайте значения M и N. Напишите программу, которая выведет все натуральные числа в промежутке от M до N. Использовать рекурсию, не использовать циклы.
+Пример на Powershell
 
-Добавили блок схему алгоритма решения задачи
+function PrintNaturalNumbers {
+    param(
+        [int]$m,
+        [int]$n
+    )
 
-Создаем массив строк originalArray со значениями "Hello", "2", "world", ":-)".
+    if ($m -le $n) {
+        Write-Output $m
+        PrintNaturalNumbers -m ($m + 1) -n $n
+    }
+}
 
-Ввод переменной count равной 0 для подсчета количества строк с длиной 3 символа и менее.
+# Запрос значений M и N у пользователя
+$m = Read-Host -Prompt "Введите значение M:"
+$n = Read-Host -Prompt "Введите значение N:"
 
-Начинаем перебор элементов массива originalArray и если длина текущей строки меньше или равна 3, увеличивается счетчик count.
+# Вызов функции для печати натуральных чисел в заданном промежутке
+PrintNaturalNumbers -m $m -n $n
 
-Создали новый массив строк newArray с размером, равным count.
+2)Напишите программу вычисления функции Аккермана с помощью рекурсии. Даны два неотрицательных числа m и n.
+Пример на Powershell
 
-Ввод переменной newIndex равной 0, чтобы отслеживать позицию в массиве
+function Ackermann {
+    param(
+        [int]$m,
+        [int]$n
+    )
 
-Копируем строки из originalArray с длиной 3 символа или менее в newArray
+    if ($m -eq 0) {
+        return $n + 1
+    } elseif ($n -eq 0) {
+        return Ackermann -m ($m - 1) -n 1
+    } else {
+        return Ackermann -m ($m - 1) -n (Ackermann -m $m -n ($n - 1))
+    }
+}
 
-Выводим каждую строку из newArray, разделяя их пробелами
+# Запрос значений M и N у пользователя
+$m = Read-Host -Prompt "Введите значение M:"
+$n = Read-Host -Prompt "Введите значение N:"
 
-Из originalArray остаются только те строки, у которых длина равна или меньше 3, на консоль будет выведено "2 :-)"
+# Вызов функции Аккермана и вывод результата
+$result = Ackermann -m $m -n $n
+Write-Host "Результат вычисления функции Аккермана для ($m, $n) равен $result"
+
+3)Задайте произвольный массив. Выведете его элементы, начиная с конца. Использовать рекурсию, не использовать циклы.
+Пример на Powershell
+
+function PrintArrayRecursively {
+    param(
+        [Parameter(Mandatory = $true)]
+        [array]$array,
+        [int]$index
+    )
+
+    if ($index -ge 0) {
+        Write-Host $array[$index]
+        PrintArrayRecursively -array $array -index ($index - 1)
+    }
+}
+
+# Запрос у пользователя ввода массива (через запятую)
+$userArray = Read-Host "Введите массив элементов через запятую (например, 1, 2, 3, 4, 5)"
+$myArray = $userArray -split ","
+
+Write-Host "Элементы массива, начиная с конца:"
+PrintArrayRecursively -array $myArray -index ($myArray.Length - 1)
