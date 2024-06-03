@@ -1,0 +1,70 @@
+1)Задайте значения M и N. Напишите программу, которая выведет все натуральные числа в промежутке от M до N. Использовать рекурсию, не использовать циклы.
+Пример на Powershell
+
+function PrintNaturalNumbers {
+    param(
+        [int]$m,
+        [int]$n
+    )
+
+    if ($m -le $n) {
+        Write-Output $m
+        PrintNaturalNumbers -m ($m + 1) -n $n
+    }
+}
+
+# Запрос значений M и N у пользователя
+$m = Read-Host -Prompt "Введите значение M:"
+$n = Read-Host -Prompt "Введите значение N:"
+
+# Вызов функции для печати натуральных чисел в заданном промежутке
+PrintNaturalNumbers -m $m -n $n
+
+2)Напишите программу вычисления функции Аккермана с помощью рекурсии. Даны два неотрицательных числа m и n.
+Пример на Powershell
+
+function Ackermann {
+    param(
+        [int]$m,
+        [int]$n
+    )
+
+    if ($m -eq 0) {
+        return $n + 1
+    } elseif ($n -eq 0) {
+        return Ackermann -m ($m - 1) -n 1
+    } else {
+        return Ackermann -m ($m - 1) -n (Ackermann -m $m -n ($n - 1))
+    }
+}
+
+# Запрос значений M и N у пользователя
+$m = Read-Host -Prompt "Введите значение M:"
+$n = Read-Host -Prompt "Введите значение N:"
+
+# Вызов функции Аккермана и вывод результата
+$result = Ackermann -m $m -n $n
+Write-Host "Результат вычисления функции Аккермана для ($m, $n) равен $result"
+
+3)Задайте произвольный массив. Выведете его элементы, начиная с конца. Использовать рекурсию, не использовать циклы.
+Пример на Powershell
+
+function PrintArrayRecursively {
+    param(
+        [Parameter(Mandatory = $true)]
+        [array]$array,
+        [int]$index
+    )
+
+    if ($index -ge 0) {
+        Write-Host $array[$index]
+        PrintArrayRecursively -array $array -index ($index - 1)
+    }
+}
+
+# Запрос у пользователя ввода массива (через запятую)
+$userArray = Read-Host "Введите массив элементов через запятую (например, 1, 2, 3, 4, 5)"
+$myArray = $userArray -split ","
+
+Write-Host "Элементы массива, начиная с конца:"
+PrintArrayRecursively -array $myArray -index ($myArray.Length - 1)
